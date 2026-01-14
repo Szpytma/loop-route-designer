@@ -792,4 +792,15 @@ input[type="range"]::-moz-range-thumb {
   .header h1 {
     font-size: 1.4rem;
   }
+
+  .header-buttons {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    justify-content: space-between;
+  }
+
+  .header-buttons .coffee-btn {
+    order: -1;
+  }
 }
