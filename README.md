@@ -9,16 +9,23 @@ A simple web app for creating running routes that start and end at the same poin
 - **Loop Routes** - Routes always return to your starting point
 - **Distance-Based** - Choose your target distance (1-30 km)
 - **Real Roads** - Routes follow actual walkable/runnable paths
+- **Random Directions** - Each route generates in a different direction
+- **Shuffle Button** - Don't like the route? Shuffle to get a new one
+- **Draggable Waypoints** - Fine-tune your route by dragging waypoints
 - **Location Search** - Find any location by name
 - **GPS Support** - Use your current location as the starting point
 - **GPX Export** - Download routes for Strava, Garmin, and other apps
+- **Built-in Help** - Usage guide and export instructions for popular apps
 
 ## How It Works
 
 1. **Set your starting point** - Click on the map, search for a location, or use your current GPS position
 2. **Choose your distance** - Use the slider to select your target route length
 3. **Generate** - The app creates waypoints in a loop around your start point and calculates a route along real roads
-4. **Export** - Download the GPX file and import it into your favorite running app
+4. **Customize** - Click **Shuffle** for a different direction, or drag the orange waypoints to reshape the route
+5. **Export** - Download the GPX file and import it into your favorite running app
+
+Click the **?** button in the app for detailed export instructions for Strava, Garmin, Komoot, and more.
 
 ## API Key Required
 
