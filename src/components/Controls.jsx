@@ -6,6 +6,8 @@ function Controls({
   onDistanceChange,
   routeType,
   onRouteTypeChange,
+  terrain,
+  onTerrainChange,
   start,
   route,
   onGenerate,
@@ -74,6 +76,31 @@ function Controls({
             onClick={() => onRouteTypeChange('out-and-back')}
           >
             Out & Back
+          </button>
+        </div>
+      </div>
+
+      {/* Terrain Preference */}
+      <div className="control-group">
+        <label>Terrain</label>
+        <div className="route-type-buttons three-col">
+          <button
+            className={`route-type-btn ${terrain === 'roads' ? 'active' : ''}`}
+            onClick={() => onTerrainChange('roads')}
+          >
+            Roads
+          </button>
+          <button
+            className={`route-type-btn ${terrain === 'mixed' ? 'active' : ''}`}
+            onClick={() => onTerrainChange('mixed')}
+          >
+            Mixed
+          </button>
+          <button
+            className={`route-type-btn ${terrain === 'trails' ? 'active' : ''}`}
+            onClick={() => onTerrainChange('trails')}
+          >
+            Trails
           </button>
         </div>
       </div>

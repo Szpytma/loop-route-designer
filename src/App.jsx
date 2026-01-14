@@ -3,6 +3,7 @@ import Map from './components/Map'
 import Controls from './components/Controls'
 import LocationSearch from './components/LocationSearch'
 import InfoModal from './components/InfoModal'
+import ElevationChart from './components/ElevationChart'
 import {
   generateLoopWaypoints,
   generateOutAndBackWaypoints,
@@ -22,6 +23,8 @@ function App() {
   const [error, setError] = useState(null)
   const [targetDistance, setTargetDistance] = useState(5000) // 5km default
   const [routeType, setRouteType] = useState('loop') // 'loop' or 'out-and-back'
+  const [terrain, setTerrain] = useState('mixed') // 'roads', 'mixed', or 'trails'
+  const [elevation, setElevation] = useState([])
   const [apiKey, setApiKey] = useState(() => {
     return localStorage.getItem('ors_api_key') || ''
   })
@@ -37,6 +40,7 @@ function App() {
     setStart(latlng)
     setWaypoints([])
     setRoute([])
+    setElevation([])
     setError(null)
   }
 
@@ -49,6 +53,7 @@ function App() {
       setStart(location)
       setWaypoints([])
       setRoute([])
+      setElevation([])
     } catch (err) {
       setError(err.message)
     } finally {
@@ -62,6 +67,7 @@ function App() {
     setStart(point)
     setWaypoints([])
     setRoute([])
+    setElevation([])
     setError(null)
   }
 
@@ -86,15 +92,17 @@ function App() {
         : generateOutAndBackWaypoints(start, targetDistance)
       setWaypoints(newWaypoints)
 
-      // Get actual road-following route
+      // Get actual road-following route with elevation
       const orsWaypoints = waypointsToORSFormat(newWaypoints)
-      const actualRoute = await getRouteBetweenWaypoints(orsWaypoints, apiKey)
+      const result = await getRouteBetweenWaypoints(orsWaypoints, apiKey, terrain)
 
-      setRoute(actualRoute)
+      setRoute(result.route)
+      setElevation(result.elevation)
     } catch (err) {
       console.error('Routing error:', err)
       setError(err.message || 'Failed to generate route. Try a different location or distance.')
       setRoute([])
+      setElevation([])
     } finally {
       setIsLoading(false)
     }
@@ -104,6 +112,7 @@ function App() {
     setStart(null)
     setWaypoints([])
     setRoute([])
+    setElevation([])
     setError(null)
   }
 
@@ -125,8 +134,9 @@ function App() {
 
     try {
       const orsWaypoints = waypointsToORSFormat(newWaypoints)
-      const actualRoute = await getRouteBetweenWaypoints(orsWaypoints, apiKey)
-      setRoute(actualRoute)
+      const result = await getRouteBetweenWaypoints(orsWaypoints, apiKey, terrain)
+      setRoute(result.route)
+      setElevation(result.elevation)
     } catch (err) {
       console.error('Routing error:', err)
       setError(err.message || 'Failed to recalculate route.')
@@ -160,6 +170,8 @@ function App() {
             onDistanceChange={setTargetDistance}
             routeType={routeType}
             onRouteTypeChange={setRouteType}
+            terrain={terrain}
+            onTerrainChange={setTerrain}
             start={start}
             route={route}
             onGenerate={handleGenerate}
@@ -170,6 +182,7 @@ function App() {
             apiKey={apiKey}
             onApiKeyChange={setApiKey}
           />
+          <ElevationChart elevation={elevation} />
         </div>
         <Map
           center={start}

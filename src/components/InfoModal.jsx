@@ -28,21 +28,31 @@ function InfoModal({ isOpen, onClose }) {
         </section>
 
         <section className="modal-section">
-          <h3>3. Choose Distance</h3>
-          <p>Use the slider to set your target route distance (1-30 km).</p>
-        </section>
-
-        <section className="modal-section">
-          <h3>4. Generate Route</h3>
+          <h3>3. Choose Terrain</h3>
           <ul>
-            <li>Click <strong>Generate Route</strong> to create your route</li>
-            <li>Click <strong>Shuffle</strong> to get a different route direction</li>
-            <li><strong>Drag orange waypoints</strong> to reshape the route</li>
+            <li><strong>Roads</strong> - Shortest route on paved roads and sidewalks</li>
+            <li><strong>Mixed</strong> - Balanced mix of roads and paths (default)</li>
+            <li><strong>Trails</strong> - Prefers parks, paths, and hiking trails</li>
           </ul>
         </section>
 
         <section className="modal-section">
-          <h3>5. Export Your Route</h3>
+          <h3>4. Choose Distance</h3>
+          <p>Use the slider to set your target route distance (1-30 km).</p>
+        </section>
+
+        <section className="modal-section">
+          <h3>5. Generate Route</h3>
+          <ul>
+            <li>Click <strong>Generate Route</strong> to create your route</li>
+            <li>Click <strong>Shuffle</strong> to get a different route direction</li>
+            <li><strong>Drag orange waypoints</strong> to reshape the route</li>
+            <li>View the <strong>elevation profile</strong> below the controls</li>
+          </ul>
+        </section>
+
+        <section className="modal-section">
+          <h3>6. Export Your Route</h3>
           <p>Click <strong>Export GPX</strong> to download your route file.</p>
         </section>
 

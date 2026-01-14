@@ -273,6 +273,11 @@ body {
   color: white;
 }
 
+.route-type-buttons.three-col .route-type-btn {
+  padding: 0.6rem 0.5rem;
+  font-size: 0.8rem;
+}
+
 /* Range inputs */
 input[type="range"] {
   width: 100%;
@@ -486,6 +491,80 @@ input[type="range"]::-moz-range-thumb {
 .waypoint-marker:active .waypoint-icon {
   cursor: grabbing;
   background: #d97706;
+}
+
+/* Elevation Chart */
+.elevation-chart {
+  background: #0f3460;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: auto;
+  border: 1px solid #2d3a5a;
+}
+
+.elevation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.elevation-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #60a5fa;
+}
+
+.elevation-stats {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.elevation-stats .stat {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.elevation-stats .gain {
+  color: #34d399;
+}
+
+.elevation-stats .loss {
+  color: #f87171;
+}
+
+.elevation-graph {
+  position: relative;
+  height: 60px;
+  background: #16213e;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.elevation-graph svg {
+  width: 100%;
+  height: 100%;
+}
+
+.elevation-labels {
+  position: absolute;
+  right: 4px;
+  top: 2px;
+  bottom: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: #666;
+  pointer-events: none;
+}
+
+.elevation-distance {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+  font-size: 0.7rem;
+  color: #666;
 }
 
 /* Info Modal */
