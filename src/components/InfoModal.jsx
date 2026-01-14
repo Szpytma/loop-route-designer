@@ -116,6 +116,19 @@ function InfoModal({ isOpen, onClose }) {
         <section className="modal-section hint">
           <p>GPX is a universal format supported by most fitness apps and GPS devices.</p>
         </section>
+
+        <h2>Support</h2>
+        <section className="modal-section">
+          <p>If you find TrailMaker useful, consider supporting its development!</p>
+          <a
+            href="https://buymeacoffee.com/szpytma"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="coffee-link"
+          >
+            ☕ Buy me a coffee
+          </a>
+        </section>
       </div>
     </div>
   )

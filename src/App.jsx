@@ -191,9 +191,20 @@ function App() {
           <h1>TrailMaker</h1>
           <p>Design your perfect running or walking route</p>
         </div>
-        <button className="help-btn" onClick={() => setShowInfo(true)} title="How to use">
-          ?
-        </button>
+        <div className="header-buttons">
+          <a
+            href="https://buymeacoffee.com/szpytma"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="coffee-btn"
+            title="Buy me a coffee"
+          >
+            ☕
+          </a>
+          <button className="help-btn" onClick={() => setShowInfo(true)} title="How to use">
+            ?
+          </button>
+        </div>
       </div>
       <InfoModal isOpen={showInfo} onClose={() => setShowInfo(false)} />
       <div className="main-container">
