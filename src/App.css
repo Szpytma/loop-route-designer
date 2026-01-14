@@ -243,6 +243,36 @@ body {
   text-decoration: underline;
 }
 
+/* Route type buttons */
+.route-type-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.route-type-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 2px solid #2d3a5a;
+  background: #0f3460;
+  color: #888;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.route-type-btn:hover {
+  border-color: #3b5998;
+  color: #ccc;
+}
+
+.route-type-btn.active {
+  border-color: #2563eb;
+  background: #1d4ed8;
+  color: white;
+}
+
 /* Range inputs */
 input[type="range"] {
   width: 100%;

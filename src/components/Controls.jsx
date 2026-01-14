@@ -4,6 +4,8 @@ import { downloadGPX } from '../utils/export'
 function Controls({
   targetDistance,
   onDistanceChange,
+  routeType,
+  onRouteTypeChange,
   start,
   route,
   onGenerate,
@@ -21,7 +23,8 @@ function Controls({
     }
 
     const distance = Math.round(calculateRouteDistance(route) / 100) / 10
-    const filename = `loop-route-${distance}km.gpx`
+    const typeLabel = routeType === 'loop' ? 'loop' : 'out-and-back'
+    const filename = `${typeLabel}-route-${distance}km.gpx`
     downloadGPX(route, filename)
   }
 
@@ -54,6 +57,25 @@ function Controls({
         >
           Get free API key
         </a>
+      </div>
+
+      {/* Route Type */}
+      <div className="control-group">
+        <label>Route Type</label>
+        <div className="route-type-buttons">
+          <button
+            className={`route-type-btn ${routeType === 'loop' ? 'active' : ''}`}
+            onClick={() => onRouteTypeChange('loop')}
+          >
+            Loop
+          </button>
+          <button
+            className={`route-type-btn ${routeType === 'out-and-back' ? 'active' : ''}`}
+            onClick={() => onRouteTypeChange('out-and-back')}
+          >
+            Out & Back
+          </button>
+        </div>
       </div>
 
       {/* Target Distance */}

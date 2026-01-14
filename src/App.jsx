@@ -5,6 +5,7 @@ import LocationSearch from './components/LocationSearch'
 import InfoModal from './components/InfoModal'
 import {
   generateLoopWaypoints,
+  generateOutAndBackWaypoints,
   waypointsToORSFormat,
   waypointsToLeafletFormat,
 } from './utils/shapes'
@@ -20,6 +21,7 @@ function App() {
   const [isLocating, setIsLocating] = useState(false)
   const [error, setError] = useState(null)
   const [targetDistance, setTargetDistance] = useState(5000) // 5km default
+  const [routeType, setRouteType] = useState('loop') // 'loop' or 'out-and-back'
   const [apiKey, setApiKey] = useState(() => {
     return localStorage.getItem('ors_api_key') || ''
   })
@@ -78,8 +80,10 @@ function App() {
     setError(null)
 
     try {
-      // Generate loop waypoints
-      const newWaypoints = generateLoopWaypoints(start, targetDistance)
+      // Generate waypoints based on route type
+      const newWaypoints = routeType === 'loop'
+        ? generateLoopWaypoints(start, targetDistance)
+        : generateOutAndBackWaypoints(start, targetDistance)
       setWaypoints(newWaypoints)
 
       // Get actual road-following route
@@ -135,8 +139,8 @@ function App() {
     <div className="app">
       <div className="header">
         <div className="header-content">
-          <h1>Loop Route Designer</h1>
-          <p>Create running routes that start and end at the same point</p>
+          <h1>TrailMaker</h1>
+          <p>Design your perfect running or walking route</p>
         </div>
         <button className="help-btn" onClick={() => setShowInfo(true)} title="How to use">
           ?
@@ -154,6 +158,8 @@ function App() {
           <Controls
             targetDistance={targetDistance}
             onDistanceChange={setTargetDistance}
+            routeType={routeType}
+            onRouteTypeChange={setRouteType}
             start={start}
             route={route}
             onGenerate={handleGenerate}

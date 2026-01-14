@@ -74,6 +74,53 @@ export function generateLoopWaypoints(start, targetDistance) {
 }
 
 /**
+ * Generate waypoints for an out-and-back route
+ *
+ * Creates a route that goes out in one direction and returns
+ * the same way (or similar parallel roads).
+ *
+ * @param {Object} start - {lat, lng} starting point
+ * @param {number} targetDistance - desired total route distance in meters
+ * @returns {Array} Array of {lat, lng} waypoints
+ */
+export function generateOutAndBackWaypoints(start, targetDistance) {
+  // Roads are typically 30-50% longer than straight lines
+  const roadFactor = 1.4
+
+  // Half the distance for the outbound leg
+  const outboundDistance = targetDistance / 2 / roadFactor
+
+  // Random bearing (0 to 2*PI) so routes go in different directions each time
+  const randomBearing = Math.random() * 2 * Math.PI
+
+  // Number of waypoints for the outbound leg
+  const waypointCount = 4
+
+  const waypoints = [start]
+
+  // Generate waypoints going out
+  for (let i = 1; i <= waypointCount; i++) {
+    const distance = (outboundDistance * i) / waypointCount
+    const point = destinationPoint(start, distance, randomBearing)
+    waypoints.push(point)
+  }
+
+  // Add return waypoints (reverse order, skip the turnaround point and start)
+  // This creates a slight offset so the return path may use parallel roads
+  const returnBearing = randomBearing + 0.05 // Slight offset for variety
+  for (let i = waypointCount - 1; i >= 1; i--) {
+    const distance = (outboundDistance * i) / waypointCount
+    const point = destinationPoint(start, distance, returnBearing)
+    waypoints.push(point)
+  }
+
+  // Return to start
+  waypoints.push(start)
+
+  return waypoints
+}
+
+/**
  * Convert waypoints to OpenRouteService format [lng, lat]
  */
 export function waypointsToORSFormat(waypoints) {

@@ -20,21 +20,29 @@ function InfoModal({ isOpen, onClose }) {
         </section>
 
         <section className="modal-section">
-          <h3>2. Choose Distance</h3>
+          <h3>2. Choose Route Type</h3>
+          <ul>
+            <li><strong>Loop</strong> - Circular route back to start via different roads</li>
+            <li><strong>Out & Back</strong> - Go out and return the same way</li>
+          </ul>
+        </section>
+
+        <section className="modal-section">
+          <h3>3. Choose Distance</h3>
           <p>Use the slider to set your target route distance (1-30 km).</p>
         </section>
 
         <section className="modal-section">
-          <h3>3. Generate Route</h3>
+          <h3>4. Generate Route</h3>
           <ul>
-            <li>Click <strong>Generate Route</strong> to create a loop</li>
+            <li>Click <strong>Generate Route</strong> to create your route</li>
             <li>Click <strong>Shuffle</strong> to get a different route direction</li>
             <li><strong>Drag orange waypoints</strong> to reshape the route</li>
           </ul>
         </section>
 
         <section className="modal-section">
-          <h3>4. Export Your Route</h3>
+          <h3>5. Export Your Route</h3>
           <p>Click <strong>Export GPX</strong> to download your route file.</p>
         </section>
 

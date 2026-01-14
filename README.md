@@ -1,12 +1,13 @@
-# Loop Route Designer
+# TrailMaker
 
-A simple web app for creating running routes that start and end at the same point. Set your desired distance, pick a starting location, and get a loop route that follows real roads.
+A simple web app for designing running and walking routes. Choose between loop or out-and-back routes, set your desired distance, pick a starting location, and get a route that follows real roads and paths.
 
 **Live Demo:** https://szpytma.github.io/loop-route-designer/
 
 ## Features
 
-- **Loop Routes** - Routes always return to your starting point
+- **Loop Routes** - Circular routes that return to your starting point
+- **Out & Back Routes** - Go out and return the same way
 - **Distance-Based** - Choose your target distance (1-30 km)
 - **Real Roads** - Routes follow actual walkable/runnable paths
 - **Random Directions** - Each route generates in a different direction
@@ -20,10 +21,11 @@ A simple web app for creating running routes that start and end at the same poin
 ## How It Works
 
 1. **Set your starting point** - Click on the map, search for a location, or use your current GPS position
-2. **Choose your distance** - Use the slider to select your target route length
-3. **Generate** - The app creates waypoints in a loop around your start point and calculates a route along real roads
-4. **Customize** - Click **Shuffle** for a different direction, or drag the orange waypoints to reshape the route
-5. **Export** - Download the GPX file and import it into your favorite running app
+2. **Choose route type** - Select **Loop** or **Out & Back**
+3. **Choose your distance** - Use the slider to select your target route length
+4. **Generate** - The app creates waypoints and calculates a route along real roads
+5. **Customize** - Click **Shuffle** for a different direction, or drag the orange waypoints to reshape the route
+6. **Export** - Download the GPX file and import it into your favorite running app
 
 Click the **?** button in the app for detailed export instructions for Strava, Garmin, Komoot, and more.
 
