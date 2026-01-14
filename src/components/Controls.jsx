@@ -7,6 +7,7 @@ function Controls({
   start,
   route,
   onGenerate,
+  onShuffle,
   onClear,
   isLoading,
   error,
@@ -101,6 +102,14 @@ function Controls({
           disabled={!start || !apiKey || isLoading}
         >
           {isLoading ? 'Generating...' : 'Generate Route'}
+        </button>
+        <button
+          className="secondary"
+          onClick={onShuffle}
+          disabled={route.length === 0 || !apiKey || isLoading}
+          title="Generate a new route in a different direction"
+        >
+          Shuffle
         </button>
         <button
           className="secondary"

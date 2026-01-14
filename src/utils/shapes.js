@@ -49,19 +49,20 @@ export function generateLoopWaypoints(start, targetDistance) {
   // So radius = targetDistance / (2 * PI * roadFactor)
   const radius = targetDistance / (2 * Math.PI * roadFactor)
 
-  // Place the center of the circle NORTH of the start point
-  // This way, start is on the southern edge of the loop
-  const loopCenter = destinationPoint(start, radius, 0) // 0 = north
+  // Random bearing (0 to 2*PI) so routes go in different directions each time
+  const randomBearing = Math.random() * 2 * Math.PI
+  const loopCenter = destinationPoint(start, radius, randomBearing)
 
   // Number of waypoints around the loop
   const waypointCount = 8
 
   const waypoints = []
 
-  // Generate waypoints in a circle, starting from the south (where our start point is)
-  // Angle 0 = north from center, so south = PI
+  // Generate waypoints in a circle, starting from opposite the center direction
+  // This ensures the start point is on the edge of the loop
+  const startAngle = randomBearing + Math.PI
   for (let i = 0; i < waypointCount; i++) {
-    const angle = Math.PI + (2 * Math.PI * i) / waypointCount
+    const angle = startAngle + (2 * Math.PI * i) / waypointCount
     const point = destinationPoint(loopCenter, radius, angle)
     waypoints.push(point)
   }

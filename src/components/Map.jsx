@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { MapContainer, TileLayer, Polyline, CircleMarker, Marker, useMapEvents, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Polyline, Marker, useMapEvents, useMap } from 'react-leaflet'
 import L from 'leaflet'
 
 // Fix for default marker icon
@@ -10,12 +10,20 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 })
 
-// Start marker icon
+// Start marker icon (red for visibility)
 const startIcon = new L.DivIcon({
   className: 'start-marker',
   html: '<div class="start-icon"></div>',
-  iconSize: [20, 20],
-  iconAnchor: [10, 10],
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+})
+
+// Waypoint marker icon (draggable)
+const waypointIcon = new L.DivIcon({
+  className: 'waypoint-marker',
+  html: '<div class="waypoint-icon"></div>',
+  iconSize: [16, 16],
+  iconAnchor: [8, 8],
 })
 
 function MapClickHandler({ onMapClick }) {
@@ -53,7 +61,25 @@ function FitBounds({ route, waypoints }) {
   return null
 }
 
-function Map({ center, mapCenter, waypoints, route, onMapClick, isLoading }) {
+function DraggableWaypoint({ position, index, onDragEnd }) {
+  const handleDragEnd = (e) => {
+    const { lat, lng } = e.target.getLatLng()
+    onDragEnd(index, { lat, lng })
+  }
+
+  return (
+    <Marker
+      position={position}
+      icon={waypointIcon}
+      draggable={true}
+      eventHandlers={{
+        dragend: handleDragEnd,
+      }}
+    />
+  )
+}
+
+function Map({ center, mapCenter, waypoints, route, onMapClick, onWaypointDrag, isLoading }) {
   const defaultCenter = [51.5074, -0.1278]
   const defaultZoom = 13
 
@@ -95,16 +121,13 @@ function Map({ center, mapCenter, waypoints, route, onMapClick, isLoading }) {
                 dashArray: '8, 8',
               }}
             />
-            {waypoints.map((point, index) => (
-              <CircleMarker
-                key={index}
-                center={point}
-                radius={3}
-                pathOptions={{
-                  color: '#888',
-                  fillColor: '#888',
-                  fillOpacity: 0.6,
-                }}
+            {/* Render draggable markers for waypoints, skip first (same as start) and last (duplicate of first) */}
+            {waypoints.slice(1, -1).map((point, index) => (
+              <DraggableWaypoint
+                key={index + 1}
+                position={point}
+                index={index + 1}
+                onDragEnd={onWaypointDrag}
               />
             ))}
           </>

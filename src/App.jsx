@@ -101,6 +101,34 @@ function App() {
     setError(null)
   }
 
+  const handleWaypointDrag = async (index, newPosition) => {
+    // Update waypoints array
+    const newWaypoints = [...waypoints]
+    newWaypoints[index] = newPosition
+
+    // If first waypoint is moved, also update the last one (they should match to close the loop)
+    if (index === 0) {
+      newWaypoints[newWaypoints.length - 1] = newPosition
+    }
+
+    setWaypoints(newWaypoints)
+
+    // Recalculate route with new waypoints
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const orsWaypoints = waypointsToORSFormat(newWaypoints)
+      const actualRoute = await getRouteBetweenWaypoints(orsWaypoints, apiKey)
+      setRoute(actualRoute)
+    } catch (err) {
+      console.error('Routing error:', err)
+      setError(err.message || 'Failed to recalculate route.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="app">
       <div className="header">
@@ -121,6 +149,7 @@ function App() {
             start={start}
             route={route}
             onGenerate={handleGenerate}
+            onShuffle={handleGenerate}
             onClear={handleClear}
             isLoading={isLoading}
             error={error}
@@ -134,6 +163,7 @@ function App() {
           waypoints={waypointsToLeafletFormat(waypoints)}
           route={route}
           onMapClick={handleMapClick}
+          onWaypointDrag={handleWaypointDrag}
           isLoading={isLoading}
         />
       </div>
