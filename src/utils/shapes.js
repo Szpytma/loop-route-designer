@@ -121,6 +121,21 @@ export function generateOutAndBackWaypoints(start, targetDistance) {
 }
 
 /**
+ * Generate waypoints for a point-to-point route
+ *
+ * Creates a simple route from start to destination.
+ *
+ * @param {Object} start - {lat, lng} starting point
+ * @param {Object} destination - {lat, lng} destination point
+ * @returns {Array} Array of {lat, lng} waypoints
+ */
+export function generatePointToPointWaypoints(start, destination) {
+  // For point-to-point, we just need start and end
+  // The routing API will find the best path between them
+  return [start, destination]
+}
+
+/**
  * Convert waypoints to OpenRouteService format [lng, lat]
  */
 export function waypointsToORSFormat(waypoints) {

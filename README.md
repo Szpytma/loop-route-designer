@@ -1,6 +1,6 @@
 # TrailMaker
 
-A simple web app for designing running and walking routes. Choose between loop or out-and-back routes, set your desired distance, pick a starting location, and get a route that follows real roads and paths.
+A simple web app for designing running and walking routes. Create loop routes, out-and-back routes, or point-to-point trails to your favorite destinations. Pick a starting location, choose your terrain preference, and get a route that follows real roads and paths.
 
 **Live Demo:** https://szpytma.github.io/loop-route-designer/
 
@@ -8,6 +8,7 @@ A simple web app for designing running and walking routes. Choose between loop o
 
 - **Loop Routes** - Circular routes that return to your starting point
 - **Out & Back Routes** - Go out and return the same way
+- **Point-to-Point** - Route from A to B (great for finding trails to destinations)
 - **Terrain Preference** - Choose roads, mixed, or trails
 - **Elevation Profile** - See elevation gain/loss with visual chart
 - **Distance-Based** - Choose your target distance (1-30 km)
@@ -23,13 +24,14 @@ A simple web app for designing running and walking routes. Choose between loop o
 ## How It Works
 
 1. **Set your starting point** - Click on the map, search for a location, or use your current GPS position
-2. **Choose route type** - Select **Loop** or **Out & Back**
-3. **Choose terrain** - Select **Roads**, **Mixed**, or **Trails**
-4. **Choose your distance** - Use the slider to select your target route length
-5. **Generate** - The app creates waypoints and calculates a route along real roads/trails
-6. **Review elevation** - Check the elevation profile to see hills and total gain/loss
-7. **Customize** - Click **Shuffle** for a different direction, or drag the orange waypoints to reshape the route
-8. **Export** - Download the GPX file and import it into your favorite running app
+2. **Choose route type** - Select **Loop**, **Out & Back**, or **A → B** (point-to-point)
+3. **For A → B mode** - Click or search to set your destination (green marker)
+4. **Choose terrain** - Select **Roads**, **Mixed**, or **Trails**
+5. **Choose your distance** - Use the slider (Loop/Out & Back only)
+6. **Generate** - The app calculates a route along real roads/trails
+7. **Review elevation** - Check the elevation profile to see hills and total gain/loss
+8. **Customize** - Click **Shuffle** for a different direction, or drag waypoints to reshape
+9. **Export** - Download the GPX file and import it into your favorite running app
 
 Click the **?** button in the app for detailed export instructions for Strava, Garmin, Komoot, and more.
 

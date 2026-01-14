@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { MapContainer, TileLayer, Polyline, Marker, useMapEvents, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Polyline, Marker, Tooltip, useMapEvents, useMap } from 'react-leaflet'
 import L from 'leaflet'
 
 // Fix for default marker icon
@@ -24,6 +24,14 @@ const waypointIcon = new L.DivIcon({
   html: '<div class="waypoint-icon"></div>',
   iconSize: [16, 16],
   iconAnchor: [8, 8],
+})
+
+// Destination marker icon (green)
+const destinationIcon = new L.DivIcon({
+  className: 'destination-marker',
+  html: '<div class="destination-icon"></div>',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
 })
 
 function MapClickHandler({ onMapClick }) {
@@ -79,7 +87,7 @@ function DraggableWaypoint({ position, index, onDragEnd }) {
   )
 }
 
-function Map({ center, mapCenter, waypoints, route, onMapClick, onWaypointDrag, isLoading }) {
+function Map({ center, destination, mapCenter, waypoints, route, routeType, onMapClick, onWaypointDrag, isLoading }) {
   const defaultCenter = [51.5074, -0.1278]
   const defaultZoom = 13
 
@@ -106,11 +114,24 @@ function Map({ center, mapCenter, waypoints, route, onMapClick, onWaypointDrag, 
 
         {/* Start marker */}
         {center && (
-          <Marker position={[center.lat, center.lng]} icon={startIcon} />
+          <Marker position={[center.lat, center.lng]} icon={startIcon}>
+            <Tooltip permanent direction="top" offset={[0, -10]} className="marker-label">
+              Start
+            </Tooltip>
+          </Marker>
         )}
 
-        {/* Waypoints (target shape) */}
-        {waypoints && waypoints.length > 0 && (
+        {/* Destination marker (for point-to-point) */}
+        {destination && (
+          <Marker position={[destination.lat, destination.lng]} icon={destinationIcon}>
+            <Tooltip permanent direction="top" offset={[0, -10]} className="marker-label">
+              Destination
+            </Tooltip>
+          </Marker>
+        )}
+
+        {/* Waypoints (target shape) - only for loop/out-and-back */}
+        {waypoints && waypoints.length > 0 && routeType !== 'point-to-point' && (
           <>
             <Polyline
               positions={waypoints}

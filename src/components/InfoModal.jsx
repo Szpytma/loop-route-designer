@@ -24,6 +24,7 @@ function InfoModal({ isOpen, onClose }) {
           <ul>
             <li><strong>Loop</strong> - Circular route back to start via different roads</li>
             <li><strong>Out & Back</strong> - Go out and return the same way</li>
+            <li><strong>A → B</strong> - Point-to-point route to a destination</li>
           </ul>
         </section>
 

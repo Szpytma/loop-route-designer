@@ -338,6 +338,32 @@ input[type="range"]::-moz-range-thumb {
   font-size: 1.1rem;
 }
 
+.status .point-set {
+  color: #60a5fa;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Legend dots */
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.legend-dot.start {
+  background: #ef4444;
+}
+
+.legend-dot.destination {
+  background: #22c55e;
+}
+
 /* Error */
 .error-box {
   background: rgba(239, 68, 68, 0.2);
@@ -466,6 +492,21 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
 }
 
+/* Destination marker (green) */
+.destination-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.destination-icon {
+  width: 24px;
+  height: 24px;
+  background: #22c55e;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
 /* Waypoint marker (draggable) */
 .waypoint-marker {
   background: transparent !important;
@@ -491,6 +532,22 @@ input[type="range"]::-moz-range-thumb {
 .waypoint-marker:active .waypoint-icon {
   cursor: grabbing;
   background: #d97706;
+}
+
+/* Marker labels */
+.marker-label {
+  background: rgba(22, 33, 62, 0.9) !important;
+  border: 1px solid #2d3a5a !important;
+  border-radius: 4px !important;
+  color: #fff !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.marker-label::before {
+  border-top-color: rgba(22, 33, 62, 0.9) !important;
 }
 
 /* Elevation Chart */

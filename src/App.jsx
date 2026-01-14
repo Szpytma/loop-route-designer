@@ -7,6 +7,7 @@ import ElevationChart from './components/ElevationChart'
 import {
   generateLoopWaypoints,
   generateOutAndBackWaypoints,
+  generatePointToPointWaypoints,
   waypointsToORSFormat,
   waypointsToLeafletFormat,
 } from './utils/shapes'
@@ -15,6 +16,7 @@ import { getCurrentLocation } from './utils/geocoding'
 
 function App() {
   const [start, setStart] = useState(null)
+  const [destination, setDestination] = useState(null)
   const [mapCenter, setMapCenter] = useState(null)
   const [waypoints, setWaypoints] = useState([])
   const [route, setRoute] = useState([])
@@ -22,7 +24,7 @@ function App() {
   const [isLocating, setIsLocating] = useState(false)
   const [error, setError] = useState(null)
   const [targetDistance, setTargetDistance] = useState(5000) // 5km default
-  const [routeType, setRouteType] = useState('loop') // 'loop' or 'out-and-back'
+  const [routeType, setRouteType] = useState('loop') // 'loop', 'out-and-back', or 'point-to-point'
   const [terrain, setTerrain] = useState('mixed') // 'roads', 'mixed', or 'trails'
   const [elevation, setElevation] = useState([])
   const [apiKey, setApiKey] = useState(() => {
@@ -37,7 +39,13 @@ function App() {
   }, [apiKey])
 
   const handleMapClick = (latlng) => {
-    setStart(latlng)
+    // In point-to-point mode, first click sets start, second sets destination
+    if (routeType === 'point-to-point' && start && !destination) {
+      setDestination(latlng)
+    } else {
+      setStart(latlng)
+      setDestination(null)
+    }
     setWaypoints([])
     setRoute([])
     setElevation([])
@@ -51,6 +59,7 @@ function App() {
       const location = await getCurrentLocation()
       setMapCenter(location)
       setStart(location)
+      setDestination(null)
       setWaypoints([])
       setRoute([])
       setElevation([])
@@ -64,7 +73,13 @@ function App() {
   const handleLocationSelect = (location) => {
     const point = { lat: location.lat, lng: location.lng }
     setMapCenter(point)
-    setStart(point)
+    // In point-to-point mode with start already set, this sets destination
+    if (routeType === 'point-to-point' && start) {
+      setDestination(point)
+    } else {
+      setStart(point)
+      setDestination(null)
+    }
     setWaypoints([])
     setRoute([])
     setElevation([])
@@ -74,6 +89,11 @@ function App() {
   const handleGenerate = async () => {
     if (!start) {
       setError('Please set a starting point first!')
+      return
+    }
+
+    if (routeType === 'point-to-point' && !destination) {
+      setError('Please set a destination point!')
       return
     }
 
@@ -87,9 +107,14 @@ function App() {
 
     try {
       // Generate waypoints based on route type
-      const newWaypoints = routeType === 'loop'
-        ? generateLoopWaypoints(start, targetDistance)
-        : generateOutAndBackWaypoints(start, targetDistance)
+      let newWaypoints
+      if (routeType === 'loop') {
+        newWaypoints = generateLoopWaypoints(start, targetDistance)
+      } else if (routeType === 'out-and-back') {
+        newWaypoints = generateOutAndBackWaypoints(start, targetDistance)
+      } else {
+        newWaypoints = generatePointToPointWaypoints(start, destination)
+      }
       setWaypoints(newWaypoints)
 
       // Get actual road-following route with elevation
@@ -110,6 +135,7 @@ function App() {
 
   const handleClear = () => {
     setStart(null)
+    setDestination(null)
     setWaypoints([])
     setRoute([])
     setElevation([])
@@ -173,6 +199,7 @@ function App() {
             terrain={terrain}
             onTerrainChange={setTerrain}
             start={start}
+            destination={destination}
             route={route}
             onGenerate={handleGenerate}
             onShuffle={handleGenerate}
@@ -186,9 +213,11 @@ function App() {
         </div>
         <Map
           center={start}
+          destination={destination}
           mapCenter={mapCenter}
           waypoints={waypointsToLeafletFormat(waypoints)}
           route={route}
+          routeType={routeType}
           onMapClick={handleMapClick}
           onWaypointDrag={handleWaypointDrag}
           isLoading={isLoading}
