@@ -1,5 +1,5 @@
 /**
- * Simple Loop Route Generator
+ * Loop Route Generator
  * Creates running routes that start and end at the same point
  */
 
@@ -32,38 +32,42 @@ function destinationPoint(center, distance, bearing) {
 
 /**
  * Generate waypoints for a loop route
- * Creates a roughly circular path that starts and ends at the same point
+ *
+ * The start point is ON the loop (not at center), so the route
+ * goes around the loop and returns to start without extra distance.
  *
  * @param {Object} start - {lat, lng} starting point
  * @param {number} targetDistance - desired route distance in meters
  * @returns {Array} Array of {lat, lng} waypoints
  */
 export function generateLoopWaypoints(start, targetDistance) {
-  const waypoints = []
-
-  // Roads are typically 30-40% longer than straight lines
-  const roadFactor = 1.35
+  // Roads are typically 30-50% longer than straight lines
+  const roadFactor = 1.4
 
   // For a circle: circumference = 2 * PI * radius
+  // We want circumference * roadFactor = targetDistance
   // So radius = targetDistance / (2 * PI * roadFactor)
   const radius = targetDistance / (2 * Math.PI * roadFactor)
 
-  // Number of waypoints around the loop (more = smoother but more API calls)
-  // 8 waypoints works well for most routes
+  // Place the center of the circle NORTH of the start point
+  // This way, start is on the southern edge of the loop
+  const loopCenter = destinationPoint(start, radius, 0) // 0 = north
+
+  // Number of waypoints around the loop
   const waypointCount = 8
 
-  // Start at the starting point
-  waypoints.push({ ...start })
+  const waypoints = []
 
-  // Generate waypoints in a circle
+  // Generate waypoints in a circle, starting from the south (where our start point is)
+  // Angle 0 = north from center, so south = PI
   for (let i = 0; i < waypointCount; i++) {
-    const angle = (2 * Math.PI * i) / waypointCount
-    const point = destinationPoint(start, radius, angle)
+    const angle = Math.PI + (2 * Math.PI * i) / waypointCount
+    const point = destinationPoint(loopCenter, radius, angle)
     waypoints.push(point)
   }
 
-  // Close the loop - back to start
-  waypoints.push({ ...start })
+  // Close the loop - first point again
+  waypoints.push(waypoints[0])
 
   return waypoints
 }
