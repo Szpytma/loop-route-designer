@@ -3,5 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/loop-route-designer/',
+  // Use '/loop-route-designer/' for GitHub Pages, '/' for Vercel
+  base: process.env.GITHUB_ACTIONS ? '/loop-route-designer/' : '/',
 })
