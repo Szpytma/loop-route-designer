@@ -142,6 +142,19 @@ function App() {
     setError(null)
   }
 
+  const handleRouteTypeChange = (newType) => {
+    setRouteType(newType)
+    // Clear destination when switching away from point-to-point
+    if (newType !== 'point-to-point') {
+      setDestination(null)
+    }
+    // Clear existing route when changing type
+    setWaypoints([])
+    setRoute([])
+    setElevation([])
+    setError(null)
+  }
+
   const handleWaypointDrag = async (index, newPosition) => {
     // Update waypoints array
     const newWaypoints = [...waypoints]
@@ -195,7 +208,7 @@ function App() {
             targetDistance={targetDistance}
             onDistanceChange={setTargetDistance}
             routeType={routeType}
-            onRouteTypeChange={setRouteType}
+            onRouteTypeChange={handleRouteTypeChange}
             terrain={terrain}
             onTerrainChange={setTerrain}
             start={start}
