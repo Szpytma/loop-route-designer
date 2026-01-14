@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Map from './components/Map'
 import Controls from './components/Controls'
 import LocationSearch from './components/LocationSearch'
+import InfoModal from './components/InfoModal'
 import {
   generateLoopWaypoints,
   waypointsToORSFormat,
@@ -22,6 +23,7 @@ function App() {
   const [apiKey, setApiKey] = useState(() => {
     return localStorage.getItem('ors_api_key') || ''
   })
+  const [showInfo, setShowInfo] = useState(false)
 
   useEffect(() => {
     if (apiKey) {
@@ -132,9 +134,15 @@ function App() {
   return (
     <div className="app">
       <div className="header">
-        <h1>Loop Route Designer</h1>
-        <p>Create running routes that start and end at the same point</p>
+        <div className="header-content">
+          <h1>Loop Route Designer</h1>
+          <p>Create running routes that start and end at the same point</p>
+        </div>
+        <button className="help-btn" onClick={() => setShowInfo(true)} title="How to use">
+          ?
+        </button>
       </div>
+      <InfoModal isOpen={showInfo} onClose={() => setShowInfo(false)} />
       <div className="main-container">
         <div className="sidebar">
           <LocationSearch
